@@ -1,15 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask, request, redirect, render_template
+import cgi
+import os
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
 @app.route("/")
-@app.route("/signup")
+@app.route("/signup", methods=['POST'])
 def signup():
     return render_template("signup.html")
 
-@app.route("/welcome")
+@app.route("/welcome", methods=["POST"])
 def welcome():
-    return render_template("welcome.html")
+    username = request.form['username']    
+    return render_template("welcome.html", username=username)
 
 app.run()
