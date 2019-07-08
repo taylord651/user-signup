@@ -57,7 +57,7 @@ def validate_signup():
                 email_error = 'Error: Email is not valid. It must contain an "@" symbol, a "."'
 
     if not username_error and not password_error and not verify_password_error and not email_error:
-        return render_template("welcome.html", username=username)
+        return redirect('/welcome?username={0}'.format(username))
     else:
         return render_template("signup.html",
             username = username,
@@ -70,7 +70,7 @@ def validate_signup():
 
 @app.route("/welcome", methods=["POST", "GET"])
 def welcome():
-    username = request.form['username']   
-    return render_template("/welcome", username=username)
+    username = request.args.get('username')   
+    return '<h1>Welcome, {0}!</h1>'.format(username)
 
 app.run()
